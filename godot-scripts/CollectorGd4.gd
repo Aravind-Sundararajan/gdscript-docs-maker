@@ -37,7 +37,7 @@ func find_files(
 		printerr("Could not open the following dirpath: %s" % dirpath)
 		return file_paths
 
-	directory.list_dir_begin()
+	directory.list_dir_begin(true, do_skip_hidden)
 	var file_name := directory.get_next()
 	var subdirectories := PackedStringArray()
 	while file_name != "":
@@ -82,7 +82,7 @@ func save_text(path := "", content := "") -> void:
 func get_reference(files := PackedStringArray(), refresh_cache := false) -> Dictionary:
 	var version := "n/a"
 	if ProjectSettings.has_setting("application/config/version"):
-		version = ProjectSettings.get_setting("application/config/version")  
+		version = ProjectSettings.get_setting("application/config/version")
 	var data := {
 		name = ProjectSettings.get_setting("application/config/name"),
 		description = ProjectSettings.get_setting("application/config/description"),

@@ -3,5 +3,16 @@ build
 dist
 src/*.egg-info
 
+# Poetry
+.venv
+poetry.lock
+
 # generated .md files (by generated_reference script)
 export
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python

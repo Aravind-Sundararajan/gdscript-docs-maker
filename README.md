@@ -8,28 +8,38 @@
 
 GDScript Docs Maker is a set of tools to convert documentation you write inside your code to an online or offline code reference in the [markdown](https://daringfireball.net/projects/markdown/syntax) or [hugo](https://gohugo.io/) format. If you make plugins or a framework for Godot, GDScript Docs Maker will generate API reference documentation from your code.
 
-**It is for Godot 3. The tool does not work with Godot 4.**
+**This tool works with both Godot 3 and Godot 4.3+.**
 
 GDScript Docs Maker creates documents following Godot's built-in class reference. You can see an example with our [Godot Steering Toolkit documentation](https://gdquest.gitbook.io/godot-3-steering-ai-framework-reference/)
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+## Poetry Dependency Management
 
-- [Usage](#usage)
-    * [Using the container image](#using-the-container-image)
-    * [Local installation](#local-installation)
-    * [Writing your code reference](#writing-your-code-reference)
-    * [Generating the markdown files](#generating-the-markdown-files)
-    * [Hugo output](#hugo-output)
-- [The manual way](#the-manual-way)
-    + [Converting JSON](#converting-json)
+This project uses [Poetry](https://python-poetry.org/) for dependency management and virtual environments.
 
-<!-- markdown-toc end -->
+### Setting up with Poetry
+
+1. Install Poetry if you haven't already:
+   ```sh
+   pip install poetry
+   ```
+2. Install dependencies and create a virtual environment:
+   ```sh
+   poetry install
+   ```
+3. Activate the virtual environment:
+   ```sh
+   poetry shell
+   ```
+4. Run commands (e.g. tests, scripts) inside the Poetry shell, or prefix with `poetry run`:
+   ```sh
+   poetry run python -m gdscript_docs_maker --version
+   ```
 
 # Usage
 
 GDScript Docs Maker can be either used using the official [Docker image](https://hub.docker.com/r/gdquest/gdscript-docs-maker) or by installing it locally. For the docker image, only [Docker](https://www.docker.com/get-started) is required.
 
-For the local installation, Godot 3.2+ and Python 3.7+ are required. **Note that GDScript Docs Maker only works with Godot 3. It is not compatible with Godot 4.**
+For the local installation, Godot 3.2+ or Godot 4.3+ and Python 3.7+ are required.
 
 ## Using the container image
 
@@ -61,20 +71,20 @@ Docstring or doc-comments in GDScript don't have any special markup.
 
 You can document classes, properties, and functions with comment blocks placed on the line before their definition.
 
-Example of docstrings for Godot 3:
+Example of docstrings for Godot 4:
 
 ```gdscript
-# A linear and angular amount of acceleration.
+## A linear and angular amount of acceleration.
 class_name GSTTargetAcceleration
 
 
-# Linear acceleration
+## Linear acceleration
 var linear: = Vector3.ZERO
-# Angular acceleration
+## Angular acceleration
 var angular: = 0.0
 
 
-# Resets the accelerations to zero
+## Resets the accelerations to zero
 func reset() -> void:
 	linear = Vector3.ZERO
 	angular = 0.0
@@ -84,10 +94,10 @@ If you need long docstrings, you can use multiple commented lines:
 
 ```gdscript
 ## A specialized steering agent that updates itself every frame so the user does
-## not have to using a KinematicBody2D
+## not have to using a CharacterBody2D
 ## category: Specialized agents
 extends GSAISpecializedAgent
-class_name GSAIKinematicBody2DAgent
+class_name GSAICharacterBody2DAgent
 ```
 
 ## Generating the markdown files
@@ -153,14 +163,14 @@ python3 -m gdscript_docs_maker $HOME/Repositories/godot-steering-toolkit/project
 If you want to generate the JSON and convert it manually, there are three steps involved:
 
 1. Copying the GDScript files to your Godot project:
-    - `./godot-scripts/Collector.gd` and `./godot-scripts/ReferenceCollectorCLI.gd` or `./godot-scripts/ReferenceCollectorCLI.gd` for Godot 3
-    - `./godot-scripts/CollectorGd4.gd` and `./godot-scripts/ReferenceCollectorCLIGd4.gd` or `./godot-scripts/ReferenceCollectorCLIGd4.gd` for Godot 4
+    - `./godot-scripts/Collector.gd` and `./godot-scripts/ReferenceCollectorCLI.gd` for Godot 3
+    - `./godot-scripts/CollectorGd4.gd` and `./godot-scripts/ReferenceCollectorCLIGd4.gd` for Godot 4
 2. Running the GDScript code with Godot, either from the editor (`ReferenceCollector.gd` / `ReferenceCollectorGd4.gd`) or by calling Godot from the command line (`ReferenceCollectorCLI.gd` / `ReferenceCollectorCLIGd4.gd`).
 3. Running `gdscript_docs_maker` on the reference.json file that Godot generated in the previous step.
 
 <!-- TODO: turn into a note block on the website. -->
 
-**Note**: to parse and collect data from GDScript code, we rely on the GDScript language server that's new in Godot 3.2.
+**Note**: to parse and collect data from GDScript code, we rely on the GDScript language server that's new in Godot 3.2 and available in Godot 4.3+.
 
 ### Converting JSON
 

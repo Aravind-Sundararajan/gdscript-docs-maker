@@ -9,8 +9,6 @@ from argparse import Namespace
 from itertools import repeat
 from typing import List
 
-import pkg_resources
-
 from . import command_line
 from .config import LOG_LEVELS, LOGGER
 from .convert_to_markdown import convert_to_markdown
@@ -22,7 +20,8 @@ def main():
     args: Namespace = command_line.parse()
 
     if args.version:
-        print(pkg_resources.get_distribution("gdscript-docs-maker").version)
+        from . import __version__
+        print(__version__)
         sys.exit()
 
     logging.basicConfig(level=LOG_LEVELS[min(args.verbose, len(LOG_LEVELS) - 1)])

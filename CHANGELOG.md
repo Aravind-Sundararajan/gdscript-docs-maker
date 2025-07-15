@@ -2,6 +2,30 @@
 
 This document lists new features, improvements, changes, and bug fixes in every GDScript docs maker release.
 
+## GDScript Docs Maker 1.8.0
+
+### New Features
+
+- Added full support for Godot 4.3+
+- Updated GDScript syntax to use Godot 4.3 APIs
+- Updated documentation examples for Godot 4
+- Migrated to Poetry for dependency management and virtual environments
+
+### Improvements
+
+- Updated README to reflect Godot 4.3 support and Poetry usage
+- Fixed GDScript syntax compatibility issues between Godot 3 and 4
+- Updated class references (KinematicBody2D → CharacterBody2D)
+- Fixed `pkg_resources` dependency issue by using modern Python packaging
+- Updated Python version requirement to >=3.9 for better compatibility
+
+### Changes
+
+- The tool now works with both Godot 3.2+ and Godot 4.3+
+- Documentation comments now use `##` instead of `#` for Godot 4 compatibility
+- Replaced setuptools with Poetry for modern Python packaging
+- Removed dependency on `pkg_resources` (setuptools)
+
 ## GDScript Docs Maker 1.7.0
 
 ### New Features

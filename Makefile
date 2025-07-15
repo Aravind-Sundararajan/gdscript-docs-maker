@@ -1,15 +1,27 @@
 all: clean build upload
 
 build:
-	python3 setup.py sdist bdist_wheel
+	poetry build
 
 clean:
-	rm -rf ./src/*.egg-info
+	rm -rf ./dist
 	rm -rf ./build
-	rm -rf ./dist/*
+	poetry run python -c "import shutil; shutil.rmtree('dist', ignore_errors=True)"
 
 upload:
-	python3 -m twine upload dist/*
+	poetry publish
 
 info:
-	python3 setup.py egg_info
+	poetry show
+
+install-dev:
+	poetry install
+
+test:
+	poetry run pytest
+
+format:
+	poetry run black src/
+
+type-check:
+	poetry run mypy src/
